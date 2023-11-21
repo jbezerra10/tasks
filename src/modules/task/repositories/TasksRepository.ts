@@ -2,9 +2,12 @@ import { Task } from "../models/Task";
 import { ITasksRepository } from "./ITasksRepository";
 
 interface IRequest {
+    id?: string;
     title: string;
     description: string;
+    updated_at?: Date;
 }
+
 
 export class TasksRepository implements ITasksRepository {
     public static INSTANCE: TasksRepository;
@@ -37,5 +40,20 @@ export class TasksRepository implements ITasksRepository {
 
     list(): Task[] {
         return this.tasks;
+    }
+
+    update(data: IRequest): void {
+        const task = this.findById(data.id);
+
+        Object.assign(task, {
+            ...data,
+            updated_at: new Date()
+        });
+    }
+
+    findById(id: string): Task {
+        const task = this.tasks.find(task => task.id === id);
+
+        return task;
     }
 }

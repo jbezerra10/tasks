@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { createTaskController } from "../modules/task/useCases/createTaskUseCase";
 import { listAllTasksController } from "../modules/task/useCases/listAllTasksUseCase";
+import { updateTaskController } from "../modules/task/useCases/updateTaskUseCase";
 
 export const tasksRoutes = Router();
 
@@ -13,9 +14,7 @@ tasksRoutes.get("/", (req, res) => {
 })
 
 tasksRoutes.put("/:id", (req, res) => {
-    return res
-        .status(200)
-        .send({sucess: "sucess"});
+    return updateTaskController.handle(req, res);
 })
 
 tasksRoutes.delete("/:id", (req, res) => {

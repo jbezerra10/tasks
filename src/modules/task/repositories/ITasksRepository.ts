@@ -8,4 +8,6 @@ interface ITasksRepositoryDTO {
 export interface ITasksRepository {
     create({title, description}: ITasksRepositoryDTO): void;
     list(): Task[];
+    update(data: Task): void;
+    findById(id: string): Task;
 }
