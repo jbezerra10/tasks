@@ -8,7 +8,6 @@ interface IRequest {
     updated_at?: Date;
 }
 
-
 export class TasksRepository implements ITasksRepository {
     public static INSTANCE: TasksRepository;
     private tasks: Task[];
@@ -51,8 +50,34 @@ export class TasksRepository implements ITasksRepository {
         });
     }
 
+    delete(id: string): void {
+        const taskIndice = this.tasks.findIndex(task => task.id === id);
+        const task = this.findById(id);
+
+        this.tasks.splice(taskIndice, 1);
+
+    }
+
+    completedTask(id: string): void {
+        const task = this.findById(id);
+
+        task.completed_at = new Date();
+    }
+
     findById(id: string): Task {
         const task = this.tasks.find(task => task.id === id);
+
+        return task;
+    }
+
+    findByTitle(title: string): Task {
+        const task = this.tasks.find(task => task.title === title);
+
+        return task;
+    }
+
+    findByDescription(description: string): Task {
+        const task = this.tasks.find(task => task.description === description);
 
         return task;
     }
